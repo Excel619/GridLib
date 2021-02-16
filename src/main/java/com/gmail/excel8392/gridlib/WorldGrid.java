@@ -13,6 +13,10 @@ public class WorldGrid<E> extends Grid<E> {
         this.blocksPerBox = blocksPerBox;
     }
 
+    public Set<E> getSurroundingElements(Location location, short distance) {
+        return this.getSurroundingElements(this.getGridLocationFromLocation(location), distance);
+    }
+
     public Set<E> getSurroundingElements(Location location) {
         return this.getSurroundingElements(this.getGridLocationFromLocation(location));
     }
@@ -23,6 +27,10 @@ public class WorldGrid<E> extends Grid<E> {
 
     public void insertElement(Location location, E element) {
         this.insertElement(this.getGridLocationFromLocation(location), element);
+    }
+
+    public void removeElement(Location location, E element) {
+        this.removeElement(this.getGridLocationFromLocation(location), element);
     }
 
     public short getBlocksPerBox() {
