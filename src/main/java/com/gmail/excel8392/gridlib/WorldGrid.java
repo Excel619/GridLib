@@ -21,6 +21,10 @@ public class WorldGrid<E> extends Grid<E> {
         return this.getSurroundingElements(this.getGridLocationFromLocation(location));
     }
 
+    public boolean containsElementInGrid(Location location, E element) {
+        return this.containsElementInGrid(this.getGridLocationFromLocation(location), element);
+    }
+
     public GridLocation getGridLocationFromLocation(Location location) {
         return new GridLocation((short) (location.getBlockX() / this.blocksPerBox), (short) (location.getBlockZ() / this.blocksPerBox));
     }
@@ -31,6 +35,10 @@ public class WorldGrid<E> extends Grid<E> {
 
     public void removeElement(Location location, E element) {
         this.removeElement(this.getGridLocationFromLocation(location), element);
+    }
+
+    public Set<E> getElements(Location location) {
+        return this.getElements(this.getGridLocationFromLocation(location));
     }
 
     public short getBlocksPerBox() {

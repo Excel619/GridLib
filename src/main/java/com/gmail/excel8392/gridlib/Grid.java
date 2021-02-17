@@ -41,6 +41,12 @@ public class Grid<E> {
         return this.getSurroundingElements(gridLocation, (short) 1);
     }
 
+    public boolean containsElementInGrid(GridLocation location, E element) {
+        if (!this.map.containsKey(location.getX())) return false;
+        if (!this.map.get(location.getX()).containsKey(location.getY())) return false;
+        return this.map.get(location.getX()).get(location.getY()).contains(element);
+    }
+
     public Set<E> getElements(GridLocation gridLocation) {
         if (!this.map.containsKey(gridLocation.getX())) return new HashSet<E>();
         if (!this.map.get(gridLocation.getX()).containsKey(gridLocation.getY())) return new HashSet<E>();

@@ -31,6 +31,11 @@ public class MultiWorldGrid<E> {
         return this.grids.get(location.getWorld()).getSurroundingElements(location);
     }
 
+    public boolean containsElementInGrid(Location location, E element) {
+        if (!this.grids.containsKey(location.getWorld())) return false;
+        return this.grids.get(location.getWorld()).containsElementInGrid(location, element);
+    }
+
     public void insertElement(Location location, E element) {
         if (!this.grids.containsKey(location.getWorld())) this.grids.put(location.getWorld(), new WorldGrid<E>(this.bounds, this.blocksPerBox));
         this.grids.get(location.getWorld()).insertElement(location, element);
@@ -41,9 +46,9 @@ public class MultiWorldGrid<E> {
         this.grids.get(location.getWorld()).removeElement(location, element);
     }
 
-    public void insertElement(World world, GridLocation gridLocation, E element) {
-        if (!this.grids.containsKey(world)) this.grids.put(world, new WorldGrid<E>(this.bounds, this.blocksPerBox));
-        this.grids.get(world).insertElement(gridLocation, element);
+    public Set<E> getElements(Location location) {
+        if (!this.grids.containsKey(location.getWorld())) return new HashSet<E>();
+        return this.grids.get(location.getWorld()).getElements(location);
     }
 
     public Set<E> getSurroundingElements(World world, GridLocation gridLocation, final short distance) {
@@ -55,14 +60,24 @@ public class MultiWorldGrid<E> {
         return this.getSurroundingElements(world, gridLocation, (short) 1);
     }
 
-    public Set<E> getElements(World world, GridLocation gridLocation) {
-        if (!this.grids.containsKey(world)) return new HashSet<E>();
-        return this.grids.get(world).getElements(gridLocation);
+    public boolean containsElementInGrid(World world, GridLocation location, E element) {
+        if (!this.grids.containsKey(world)) return false;
+        return this.grids.get(world).containsElementInGrid(location, element);
+    }
+
+    public void insertElement(World world, GridLocation gridLocation, E element) {
+        if (!this.grids.containsKey(world)) this.grids.put(world, new WorldGrid<E>(this.bounds, this.blocksPerBox));
+        this.grids.get(world).insertElement(gridLocation, element);
     }
 
     public void removeElement(World world, GridLocation gridLocation, E element) {
         if (!this.grids.containsKey(world)) return;
         this.grids.get(world).removeElement(gridLocation, element);
+    }
+
+    public Set<E> getElements(World world, GridLocation gridLocation) {
+        if (!this.grids.containsKey(world)) return new HashSet<E>();
+        return this.grids.get(world).getElements(gridLocation);
     }
 
     public GridBounds getBounds() {
